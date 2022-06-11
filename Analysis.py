@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import matplotlib
+import mplcursors
 
 #merging all the monthly sales data into a single file
+import pylab as pl
 
 directory_csv_files = r"C:\Users\User\PycharmProjects\Sales data analysis\Sales_data_analysis\Sales_Data\{}"
 files = [file for file in os.listdir(r"C:\Users\User\PycharmProjects\Sales data analysis\Sales_data_analysis\Sales_Data")]
@@ -39,6 +41,31 @@ best_sales = all_data.groupby('Month').sum()
 
 #####Visualisation with Bar chart
 months = range(1,13)
+month_names = []
+month_names = ['Dummy', 'January', 'February', 'March', 'April','May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+highest_sale = int(best_sales['Total sales'].max())
+sales = range(1000000,round(highest_sale)+ 1000000 , 1000000)
+
+fig, ax = plt.subplots()
 plt.bar(months, best_sales['Total sales'])
+ax.ticklabel_format(style='plain')
+plt.xticks(months)
+plt.ylabel('Sales in millions($)')
+pl.xlabel('Months')
+plt.title('Sales report of the year')
+
+cursor = mplcursors.cursor(hover=True)
+@cursor.connect("add")
+def on_add(sel):
+    x, y, width, height = sel.artist[sel.target.index].get_bbox().bounds
+    sel.annotation.set(text=f"{  month_names[round(x)]} :{height}{'$'}",
+                       position=(10, 0), anncoords="offset points")
+    sel.annotation.xy = (x + width / 2, y + height / 2)
+    print(x)
+    #sel.annotation.get_bbox_patch().set(alpha=0.8)
+
+plt.tight_layout()
+
+
 plt.show()
-#print(best_sales)
+
