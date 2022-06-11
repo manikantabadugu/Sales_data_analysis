@@ -54,6 +54,8 @@ plt.ylabel('Sales in millions($)')
 pl.xlabel('Months')
 plt.title('Sales report of the year')
 
+#Exact Sales values will be availaible in the bar chart when the pointer hover overs the Bars
+
 cursor = mplcursors.cursor(hover=True)
 @cursor.connect("add")
 def on_add(sel):
@@ -63,9 +65,6 @@ def on_add(sel):
     sel.annotation.xy = (x + width / 2, y + height / 2)
     print(x)
     #sel.annotation.get_bbox_patch().set(alpha=0.8)
-
 plt.tight_layout()
-
-
 plt.show()
 
