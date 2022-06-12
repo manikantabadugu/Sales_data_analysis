@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
-import matplotlib
 import mplcursors
 
 #merging all the monthly sales data into a single file
@@ -60,11 +59,10 @@ cursor = mplcursors.cursor(hover=True)
 @cursor.connect("add")
 def on_add(sel):
     x, y, width, height = sel.artist[sel.target.index].get_bbox().bounds
-    sel.annotation.set(text=f"{  month_names[round(x)]} :{height}{'$'}",
-                       position=(10, 0), anncoords="offset points")
+    sel.annotation.set(text=f"{  month_names[round(x)]} :{round(height)}{'$'}",
+                       position=(-10, -10), anncoords="offset points")
     sel.annotation.xy = (x + width / 2, y + height / 2)
-    print(x)
-    #sel.annotation.get_bbox_patch().set(alpha=0.8)
+
 plt.tight_layout()
 plt.show()
 
