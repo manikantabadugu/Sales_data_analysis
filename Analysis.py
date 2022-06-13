@@ -15,9 +15,6 @@ for file in files:
     df = pd.read_csv(directory_csv_files.format(file))
     all_months_data = pd.concat([all_months_data, df])
 
-#converting the data frame into a CSV file
-all_months_data.to_csv('all_months_data.csv', index = False)
-
 #cleaning data, to deal with missing values
 all_data = all_months_data.dropna(how= 'all')
 
@@ -35,6 +32,10 @@ all_data['Month'] = all_data['Order Date'].str[0:2].astype('int32')
 #adding an extra row with total order values
 all_data['Total sales'] = all_data['Quantity Ordered']*all_data['Price Each']
 
+#converting the data frame into a CSV file
+all_data.to_csv('all_data.csv', index = False)
+
+
 #Determining the months with highest sales
 best_sales = all_data.groupby('Month').sum()
 
@@ -42,15 +43,13 @@ best_sales = all_data.groupby('Month').sum()
 months = range(1,13)
 month_names = []
 month_names = ['Dummy', 'January', 'February', 'March', 'April','May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-highest_sale = int(best_sales['Total sales'].max())
-sales = range(1000000,round(highest_sale)+ 1000000 , 1000000)
 
 fig, ax = plt.subplots()
 plt.bar(months, best_sales['Total sales'])
 ax.ticklabel_format(style='plain')
 plt.xticks(months)
 plt.ylabel('Sales in millions($)')
-pl.xlabel('Months')
+plt.xlabel('Months')
 plt.title('Sales report of the year')
 
 #Exact Sales values will be availaible in the bar chart when the pointer hover overs the Bars
@@ -65,4 +64,21 @@ def on_add(sel):
 
 plt.tight_layout()
 plt.show()
+
+#Which city have the highest sales
+#For this analysis we need a column of city
+
+all_data['City'] = all_data['Purchase Address'].apply(lambda x : x.split(',')[1] + (',') + x.split(',')[2].split(' ')[1])
+best_sales_city = all_data.groupby('Month').sum()
+
+#Visulaisation with resptect to cities
+fig, ax = plt.subplots()
+cities = [city for city, df in all_data.groupby('City')]
+plt.bar(cities, best_sales_city['Total sales'])
+plt.xticks(cities,rotation=90)
+plt.ylabel('Sales in millions($)')
+plt.xlabel('Cities')
+plt.title('Sales report of the year')
+
+
 
