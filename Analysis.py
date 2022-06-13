@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import mplcursors
+import matplotlib
 
 #merging all the monthly sales data into a single file
 import pylab as pl
@@ -46,7 +47,8 @@ month_names = ['Dummy', 'January', 'February', 'March', 'April','May', 'June', '
 
 fig, ax = plt.subplots()
 plt.bar(months, best_sales['Total sales'])
-ax.ticklabel_format(style='plain')
+ax.get_yaxis().set_major_formatter(
+    matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
 plt.xticks(months)
 plt.ylabel('Sales in millions($)')
 plt.xlabel('Months')
@@ -58,7 +60,7 @@ cursor = mplcursors.cursor(hover=True)
 @cursor.connect("add")
 def on_add(sel):
     x, y, width, height = sel.artist[sel.target.index].get_bbox().bounds
-    sel.annotation.set(text=f"{  month_names[round(x)]} :{round(height)}{'$'}",
+    sel.annotation.set(text=f"{month_names[round(x)]} :{round(height)}{'$'}",
                        position=(-10, -10), anncoords="offset points")
     sel.annotation.xy = (x + width / 2, y + height / 2)
 
@@ -69,16 +71,28 @@ plt.show()
 #For this analysis we need a column of city
 
 all_data['City'] = all_data['Purchase Address'].apply(lambda x : x.split(',')[1] + (',') + x.split(',')[2].split(' ')[1])
-best_sales_city = all_data.groupby('Month').sum()
+best_sales_city = all_data.groupby('City').sum()
 
 #Visulaisation with resptect to cities
 fig, ax = plt.subplots()
 cities = [city for city, df in all_data.groupby('City')]
 plt.bar(cities, best_sales_city['Total sales'])
-plt.xticks(cities,rotation=90)
+plt.xticks(cities,rotation=90, size = 5)
+ax.get_yaxis().set_major_formatter(
+    matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
 plt.ylabel('Sales in millions($)')
 plt.xlabel('Cities')
 plt.title('Sales report of the year')
 
+ursor = mplcursors.cursor(hover=True)
+@cursor.connect("add")
+def on_add(sel):
+    x, y, width, height = sel.artist[sel.target.index].get_bbox().bounds
+    sel.annotation.set(text=f"{cities[round(x)]} :{height}{'$'}",
+                       position=(-10, -10), anncoords="offset points")
+    sel.annotation.xy = (x + width / 2, y + height / 2)
+
+
+plt.show()
 
 
