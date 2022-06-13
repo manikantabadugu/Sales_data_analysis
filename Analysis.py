@@ -119,6 +119,8 @@ df= all_data[all_data['Order ID'].duplicated(keep=False)]
 df['Grouped']= df.groupby('Order ID')['Product'].transform(lambda x: ','.join(x))
 df=df[['Order ID','Grouped']].drop_duplicates()
 
+#converting the data frame into a CSV file
+all_data.to_csv('all_data.csv', index = False)
 
 count=Counter()
 for row in df['Grouped']:
