@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import mplcursors
 import matplotlib
+from collections import Counter
+from itertools import combinations
 
 #merging all the monthly sales data into a single file
 import pylab as pl
@@ -109,4 +111,37 @@ plt.xticks(hours)
 plt.xlabel('Hour')
 plt.ylabel('Number of products ordered')
 plt.grid()
+plt.show()
+
+
+#What products are often sold together?
+df= all_data[all_data['Order ID'].duplicated(keep=False)]
+df['Grouped']= df.groupby('Order ID')['Product'].transform(lambda x: ','.join(x))
+df=df[['Order ID','Grouped']].drop_duplicates()
+
+
+count=Counter()
+for row in df['Grouped']:
+   row_list=row.split(',')
+   count.update(Counter(combinations(row_list,2)))
+
+print(count.most_common(10))
+
+
+#Most ordered items and the probable reasons for their high sales.
+
+items = all_data.groupby('Product')
+quantity_of_ordered_items = items.sum()['Quantity Ordered']
+items_list = [item for item, df in items]
+
+prices = all_data.groupby('Product').mean()['Price Each']
+print(prices)
+fig,ax1=plt.subplots()
+ax2=ax1.twinx()
+ax1.bar(items_list,quantity_of_ordered_items)
+ax2.plot(items_list,prices,'b-')
+ax1.set_xlabel('Name of the Item')
+ax2.set_ylabel('Price of the Item in dollars($)')
+ax1.set_ylabel('Quantity ordered')
+ax1.set_xticklabels(items_list,rotation=90, size = 5)
 plt.show()
