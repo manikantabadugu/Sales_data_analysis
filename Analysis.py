@@ -92,7 +92,21 @@ def on_add(sel):
                        position=(-10, -10), anncoords="offset points")
     sel.annotation.xy = (x + width / 2, y + height / 2)
 
-
 plt.show()
 
+#What time should the advertisements be displayed to increase the likelihood of the customer buying the product
 
+all_data['Order Date'] = pd.to_datetime(all_data['Order Date'])
+all_data['Hour'] = all_data['Order Date'].dt.hour
+all_data['Minute'] = all_data['Order Date'].dt.minute
+print(all_data.head())
+
+#Visualisation of number of orders placed in accordance with time using line chart
+hours=[hour for hour,df in all_data.groupby('Hour')]
+plt.title('Number of orders placed in accordance with time')
+plt.plot(hours,all_data.groupby(['Hour']).count())
+plt.xticks(hours)
+plt.xlabel('Hour')
+plt.ylabel('Number of products ordered')
+plt.grid()
+plt.show()
