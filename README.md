@@ -5,7 +5,7 @@ I've obtained some useful information from the data provided, which has a wide r
 
 # 1.At what time should the advertisements be displayed to increase the likelihood of the customer buying the product?
 
-Conclusion: Most of the orders were placed at 11:00 and 19:00. This shows that most of the users are active at these times, which can be a perfect time for advertisements.
+Conclusion: Most of the orders were placed at 12:00 and 19:00. This shows that most of the users are active at these times, which can be a perfect time for advertisements.
 ![3 (2)](https://user-images.githubusercontent.com/84836313/173913258-61331c12-6412-4811-879f-fd64254bc017.png)
 
 # 2.Which items are frequently bought together? This information can be used to give product suggestions to customers, which might be helpful to increase sales.
