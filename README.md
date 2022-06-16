@@ -19,7 +19,8 @@ Here's a list of 2 items that were frequently bought together.
 # 3.The most ordered items and the probable reasons for their high sales.
 
 Conclusion: The following data shows a clear correlation between the price of the item and the number of items sold. In 90% of the cases, items with the lowest cost have high sales.
-![4 (2)](https://user-images.githubusercontent.com/84836313/173913456-06209585-3c04-4edd-b957-78abd474b4d5.png)
+![Screenshot (10)](https://user-images.githubusercontent.com/84836313/174055522-a1fc712e-d816-4b92-91cc-967f27cf84bc.png)
+
 
 # 4.Cities with the highest number of orders.
 ![2 (2)](https://user-images.githubusercontent.com/84836313/173913620-65dc2c0b-c2c0-4b3a-82ef-92990a5fb23f.png)
