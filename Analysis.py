@@ -101,7 +101,7 @@ plt.show()
 all_data['Order Date'] = pd.to_datetime(all_data['Order Date'])
 all_data['Hour'] = all_data['Order Date'].dt.hour
 all_data['Minute'] = all_data['Order Date'].dt.minute
-print(all_data.head())
+
 
 #Visualisation of number of orders placed in accordance with time using line chart
 hours=[hour for hour,df in all_data.groupby('Hour')]
@@ -137,7 +137,6 @@ quantity_of_ordered_items = items.sum()['Quantity Ordered']
 items_list = [item for item, df in items]
 
 prices = all_data.groupby('Product').mean()['Price Each']
-print(prices)
 fig,ax1=plt.subplots()
 ax2=ax1.twinx()
 ax1.bar(items_list,quantity_of_ordered_items)
