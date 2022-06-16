@@ -25,5 +25,5 @@ Conclusion: The following data shows a clear correlation between the price of th
 # 4.Cities with the highest number of orders.
 ![2 (2)](https://user-images.githubusercontent.com/84836313/173913620-65dc2c0b-c2c0-4b3a-82ef-92990a5fb23f.png)
 
-# 5.Months with the highest orders can be used to stockpile the goods.
+# 5.Information about months with the highest orders can be used to stockpile the goods in these particular months in the future.
 ![1 (2)](https://user-images.githubusercontent.com/84836313/173913709-8b80f3a9-4357-4730-88c3-7b69b46aebcb.png)
